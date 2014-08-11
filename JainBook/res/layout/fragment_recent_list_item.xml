@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_bg"
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:padding="3dp" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/taselector"
+        android:padding="@dimen/layout_padding_small"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <RelativeLayout
+            android:id="@+id/relativeLayoutRecentListItemImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center" >
+
+            <ImageView
+                android:id="@+id/imageViewRecentVideosListSpeaker"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:adjustViewBounds="true"
+                android:background="@color/light_gray_divider"
+                android:padding="1dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/icon" />
+
+            <TextView
+                android:id="@+id/textViewRecentVideosListTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/imageViewRecentVideosListSpeaker"
+                android:layout_alignRight="@+id/imageViewRecentVideosListSpeaker"
+                android:background="#BB000000"
+                android:padding="2dp"
+                android:layout_marginRight="1dp"
+                android:layout_marginBottom="1dp"
+                android:text="0:00"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/small_text_font_size" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relativeLayoutRecentListItemDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/layout_padding_medium" >
+
+            <TextView
+                android:id="@+id/textViewRecentVideosListSpeakerName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:text="SpeakerName"
+                android:textColor="@color/text_normal"
+                android:textSize="@dimen/small_text_font_size" />
+
+            <TextView
+                android:id="@+id/textViewRecentVideosListVidTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/textViewRecentVideosListSpeakerName"
+                android:ellipsize="end"
+                android:lines="2"
+                android:minLines="2"
+                android:text="Video Title"
+                android:textColor="@color/text_blue"
+                android:textSize="@dimen/small_text_font_size" />
+
+             <TextView
+                android:id="@+id/textViewRecentVideosListCategory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textViewRecentVideosListVidTitle"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="Category:"
+                android:textColor="@color/text_normal"
+                android:textSize="@dimen/small_text_font_size" /> 
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/textViewRecentVideosListCategory" >
+
+                <TextView
+                    android:id="@+id/textViewRecentVideosListLanguage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:text="Language:"
+                    android:textColor="@color/text_normal"
+                    android:textSize="@dimen/small_text_font_size" />
+
+                <TextView
+                    android:id="@+id/textViewRecentVideosListDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="Date"
+                    android:textColor="@color/text_normal"
+                    android:textSize="@dimen/small_text_font_size" />
+            </RelativeLayout>
+        </RelativeLayout>
+    </LinearLayout>
+
+</LinearLayout>

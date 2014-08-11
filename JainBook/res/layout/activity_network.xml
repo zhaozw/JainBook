@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_bg"
+    android:orientation="vertical"
+    android:padding="@dimen/layout_padding_large" >
+
+    <ImageButton
+        android:id="@+id/buttonNetworkRetry"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:background="@android:color/transparent"
+        android:minHeight="40dip"
+        android:paddingLeft="@dimen/layout_padding_medium"
+        android:paddingRight="@dimen/layout_padding_medium"
+        android:src="@drawable/retry"
+        android:textColor="@android:color/white" />
+
+    <ImageButton
+        android:id="@+id/buttonGoToMyLibrary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/buttonNetworkRetry"
+        android:layout_below="@+id/buttonNetworkRetry"
+        android:layout_marginTop="@dimen/layout_padding_large"
+        android:background="@android:color/transparent"
+        android:minHeight="40dip"
+        android:paddingLeft="@dimen/layout_padding_medium"
+        android:paddingRight="@dimen/layout_padding_medium"
+        android:src="@drawable/mylibrary"
+        android:textColor="@android:color/white" />
+
+    <TextView
+        android:id="@+id/textViewNetworkText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/buttonNetworkRetry"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:padding="@dimen/layout_padding_large"
+        android:text="No network connection!"
+        android:textColor="@color/text_normal"
+        android:textSize="22dp"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textViewNetworkText"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/networkicon" />
+
+</RelativeLayout>
