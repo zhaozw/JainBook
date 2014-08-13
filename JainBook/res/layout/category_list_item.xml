@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/taselector"
+    android:padding="5dp"
     android:gravity="center_vertical" >
 
     
@@ -17,6 +18,7 @@
         android:paddingLeft="12dp"
         android:text="Torah Menu"
         android:textAppearance="?android:attr/textAppearanceListItemSmall"
+        android:background="@drawable/layout_bg"
         android:textColor="@color/black" />
 
 
