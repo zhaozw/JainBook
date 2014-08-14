@@ -6,10 +6,8 @@ import android.preference.PreferenceManager;
 
 public class SharedPreferencesUtil {
 	public static final int MODE_PRIVATE = 0;
-	public static final String WHEN_LACTURE_SELECTED="whenlactureSelected";
-	//public static final String WHEN_LACTURE_SELECTED_CHECKBOX_SETTING="whenLactureSelectedCheckBoxSetting";
-
-	public static void saveStringPreferences(Context context, String key,
+	
+	public static void savePreferences(Context context, String key,
 			String value) {
 		SharedPreferences sPrefs = PreferenceManager
 				.getDefaultSharedPreferences(context);
@@ -18,7 +16,7 @@ public class SharedPreferencesUtil {
 		editor.commit();
 	}
 
-	public static void saveIntegerPreferences(Context context, String key,
+	public static void savePreferences(Context context, String key,
 			Integer value) {
 		SharedPreferences sPrefs = PreferenceManager
 				.getDefaultSharedPreferences(context);
@@ -27,7 +25,7 @@ public class SharedPreferencesUtil {
 		editor.commit();
 	}
 
-	public static void saveBooleanPreferences(Context context, String key,
+	public static void savePreferences(Context context, String key,
 			Boolean value) {
 		SharedPreferences sPrefs = PreferenceManager
 				.getDefaultSharedPreferences(context);
@@ -44,24 +42,24 @@ public class SharedPreferencesUtil {
 		editor.commit();
 	}
 
-	public static Boolean getBooleanPreferences(Context context, String key) {
+	public static Boolean getPreferences(Context context, String key,boolean defValue) {
 		SharedPreferences sharedPreferences = PreferenceManager
 				.getDefaultSharedPreferences(context);
-		Boolean savedPref = sharedPreferences.getBoolean(key, false);
+		Boolean savedPref = sharedPreferences.getBoolean(key, defValue);
 		return savedPref;
 	}
 
-	public static String getStringPreferences(Context context, String key) {
+	public static String getPreferences(Context context, String key,String defValue) {
 		SharedPreferences sharedPreferences = PreferenceManager
 				.getDefaultSharedPreferences(context);
-		String savedPref = sharedPreferences.getString(key, "");
+		String savedPref = sharedPreferences.getString(key, defValue);
 		return savedPref;
 	}
 
-	public static Integer getIntegerPreferences(Context context, String key) {
+	public static Integer getPreferences(Context context, String key,int defValue) {
 		SharedPreferences sharedPreferences = PreferenceManager
 				.getDefaultSharedPreferences(context);
-		Integer savedPref = sharedPreferences.getInt(key, 0);
+		Integer savedPref = sharedPreferences.getInt(key, defValue);
 		return savedPref;
 	}
 	
