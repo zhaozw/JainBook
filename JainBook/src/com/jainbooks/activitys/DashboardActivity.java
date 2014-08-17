@@ -33,6 +33,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -56,6 +57,7 @@ import com.jainbooks.fragments.EBookNetworkHandlerFragment;
 import com.jainbooks.fragments.EBookStoreFragment;
 import com.jainbooks.fragments.EBookMyLibraryFragment;
 import com.jainbooks.model.Store;
+import com.jainbooks.mupdf.MuPDFActivity;
 import com.jainbooks.utils.TAListener;
 import com.jainbooks.utils.Utils;
 import com.jainbooks.web.TAPOSTWebServiceAsyncTask;
@@ -243,6 +245,13 @@ public class DashboardActivity extends Activity {
 			}
 		} else if (position == 1) {
 			fragment = new EBookMyLibraryFragment();
+			
+		/*	Uri uri = Uri.parse("file:///android_asset/and.pdf");
+			Intent intent = new Intent(this,MuPDFActivity.class);
+			intent.setAction(Intent.ACTION_VIEW);
+			intent.setData(uri);
+			startActivity(intent);
+			return;*/
 		} else if (position == 2) {
 			fragment = new AccountFragment();
 		}

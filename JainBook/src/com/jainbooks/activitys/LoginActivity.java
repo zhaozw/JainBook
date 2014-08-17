@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.Session;
@@ -52,8 +53,8 @@ public class LoginActivity extends Activity{
 	
 	// google+
 	
-	/*private SignInButton btnSignIn;
-	private GoogleApiClient mGoogleApiClient;
+	private SignInButton btnSignIn;
+	/*private GoogleApiClient mGoogleApiClient;
 	private ConnectionResult mConnectionResult;
 	 private static final int RC_SIGN_IN = 0;
 	 private boolean mIntentInProgress;
@@ -96,8 +97,17 @@ public class LoginActivity extends Activity{
             
             }
         });
-        /*   btnSignIn = (SignInButton) findViewById(R.id.btn_sign_in);
-        btnSignIn.setOnClickListener(new OnClickListener() {
+           btnSignIn = (SignInButton) findViewById(R.id.btn_sign_in);
+           for (int i = 0; i < btnSignIn.getChildCount(); i++) {
+               View v = btnSignIn.getChildAt(i);
+
+               if (v instanceof TextView) {
+                   TextView tv = (TextView) v;
+                   tv.setText("Log in with Google");
+                   return;
+               }
+           }
+    /*    btnSignIn.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View arg0) {
