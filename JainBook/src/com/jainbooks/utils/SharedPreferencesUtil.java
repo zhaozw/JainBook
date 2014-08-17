@@ -6,6 +6,10 @@ import android.preference.PreferenceManager;
 
 public class SharedPreferencesUtil {
 	public static final int MODE_PRIVATE = 0;
+	public static final String USER_NAME = "username";
+	public static final String PASSWORD = "password";
+	public static final String USER="user";
+	
 	
 	public static void savePreferences(Context context, String key,
 			String value) {

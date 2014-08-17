@@ -4,8 +4,12 @@
 	android:versionCode="1"
 	android:versionName="@string/version"
 	android:installLocation="auto">
-	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-	<uses-permission android:name="android.permission.INTERNET" />
+	 <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
 	<supports-screens
 		android:smallScreens="true"
 		android:normalScreens="true"
@@ -15,6 +19,7 @@
 	<application
 		android:label="@string/app_name"
 		android:icon="@drawable/icon"
+		android:name="com.jainbooks.activitys.App"
 		android:hardwareAccelerated="true">
 		<activity
 			android:name="com.jainbooks.activitys.DashboardActivity"
@@ -89,6 +94,13 @@
             android:name="android.support.PARENT_ACTIVITY"
             android:value="com.jainbooks.activitys.DashboardActivity" />
     </activity>
-		
+		  <activity android:name="com.jainbooks.activitys.RegistrationActivity"></activity>
+	<activity android:name="com.facebook.LoginActivity"
+                  android:theme="@android:style/Theme.Translucent.NoTitleBar"
+                  android:label="@string/app_name" />
+        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/app_id"/>	
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
 	</application>
 </manifest> 

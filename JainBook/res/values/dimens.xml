@@ -7,9 +7,9 @@
 
     <!-- Account Overview -->
     <dimen name="header_text_font_size">17sp</dimen>
-    <dimen name="normal_text_font_size">15sp</dimen>
-    <dimen name="large_text_font_size">17sp</dimen>
-    <dimen name="small_text_font_size">13sp</dimen>
+    <dimen name="normal_text_font_size">15dp</dimen>
+    <dimen name="large_text_font_size">17dp</dimen>
+    <dimen name="small_text_font_size">13dp</dimen>
     <dimen name="very_small_text_font_size">11sp</dimen>
     <dimen name="layout_padding_large">20dp</dimen>
     <dimen name="layout_padding_medium">10dp</dimen>
@@ -22,5 +22,7 @@
     <dimen name="order_details_padding_med">10dp</dimen>
     <dimen name="order_details_padding_small">5dp</dimen>
     <dimen name="login_container_side_margin">30dp</dimen>
+    <dimen name="normel_text_size_list_item">15dp</dimen>
+    <dimen name="medium_text_size_listitem">12dp</dimen>
 
 </resources>

@@ -81,30 +81,12 @@ public class TAWebServiceAsyncTask extends AsyncTask<Void, Void, String> {
 	protected void onPostExecute(String result) {
 		super.onPostExecute(result);
 
-		try {
 			// Dismiss all progress dialog on task complete
 			if(mShowDialog)
 			NotificationUtils.dismissProgressDialog();
 
-			if (mVerifyJSONObject) {
-				// Validating JSON response
-				/*try {
-				//	new Gson().fromJson(result, TARecentVideosModel.class);
-					// If this goes by without exceptions, the data received can
-					// be
-					// confirmed to be in JSON format.
-				} catch (JsonParseException e) {
-					// If an exception is caught, dump the response and end task
-					// with failure.
-					e.printStackTrace();
-					Bundle returnData = new Bundle();
-					returnData.putString(TAListener.LISTENER_BUNDLE_STRING, "");
-					mListener.onTaskFailed(returnData);
-					return;
-				}*/
-			}
-			// JSON validated, check for content availability and respond to
-			// caller accordingly.
+			//if (mVerifyJSONObject) {
+		
 			Bundle returnData = new Bundle();
 			returnData.putString(TAListener.LISTENER_BUNDLE_STRING, result);
 			if (result != null || !TextUtils.isEmpty(result)) {
@@ -113,11 +95,8 @@ public class TAWebServiceAsyncTask extends AsyncTask<Void, Void, String> {
 				mListener.onTaskFailed(returnData);
 			}
 
-		} catch (NullPointerException e) {
-			e.printStackTrace();
-			Bundle returnData = new Bundle();
-			returnData.putString(TAListener.LISTENER_BUNDLE_STRING, "");
-			mListener.onTaskFailed(returnData);
+		
+	
 		}
-	}
+	//}
 }

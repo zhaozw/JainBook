@@ -21,7 +21,7 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
-import com.jainbooks.activitys.TANetworkHandlerActivity;
+import com.jainbooks.fragments.EBookNetworkHandlerFragment;
 import com.jainbooks.utils.NotificationUtils;
 import com.jainbooks.utils.TAListener;
 import com.jainbooks.utils.Utils;
@@ -71,7 +71,7 @@ public class TAPOSTWebServiceAsyncTask extends AsyncTask<Void, Void, String> {
 			// NotificationUtils.showNotificationToast(mActivity,
 			// "Internet connection is required to proceed.");
 			Intent networkIntent = new Intent(mActivity,
-					TANetworkHandlerActivity.class);
+					EBookNetworkHandlerFragment.class);
 			mActivity.startActivity(networkIntent);
 
 			cancel(true);

@@ -25,7 +25,10 @@
     <color name="black">#000000</color>
     <color name="dialog_button_background">#ede6e6</color>
      <color name="dialog_button_background_disable">#8e8787</color>
-	<color name="new_bg">#F1E5BD</color>
+	<color name="new_bg">#ffe8eef4</color>
 	  <color name="transparent">#00000000</color>
+	  
+	   <color name="orange">#F9C330</color>
+     <color name="orange_light">#FFDE85</color>
 	
 </resources>

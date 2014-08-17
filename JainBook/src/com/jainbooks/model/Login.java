@@ -4,58 +4,34 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Login {
-
 	@Expose
-	private String status;
-	@SerializedName("ID")
+	private String authToken;
 	@Expose
-	private Integer iD;
+	private String statusCode;
 	@Expose
-	private String user_email;
-	@Expose
-	private String gender;
+	private String message;
 
-	@Expose
-	private String error;
-
-	public String getError() {
-		return error;
+	public String getAuthToken() {
+	return authToken;
 	}
 
-	public void setError(String error) {
-		this.error = error;
+	public void setAuthToken(String authToken) {
+	this.authToken = authToken;
 	}
 
-	public String getStatus() {
-		return status;
+	public String getStatusCode() {
+	return statusCode;
 	}
 
-	public void setStatus(String status) {
-		this.status = status;
+	public void setStatusCode(String statusCode) {
+	this.statusCode = statusCode;
 	}
 
-	public Integer getID() {
-		return iD;
+	public String getMessage() {
+	return message;
 	}
 
-	public void setID(Integer iD) {
-		this.iD = iD;
+	public void setMessage(String message) {
+	this.message = message;
 	}
-
-	public String getUser_email() {
-		return user_email;
-	}
-
-	public void setUser_email(String user_email) {
-		this.user_email = user_email;
-	}
-
-	public String getGender() {
-		return gender;
-	}
-
-	public void setGender(String gender) {
-		this.gender = gender;
-	}
-
 }

@@ -16,6 +16,9 @@
 
 package com.jainbooks.activitys;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 import org.jainbooks.ebook.R;
 
 import android.app.Activity;
@@ -25,12 +28,18 @@ import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.view.LayoutInflater;
+import android.util.Base64;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -40,7 +49,17 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.google.gson.JsonObject;
+import com.jainbooks.adapter.TASlidingMenuListAdapter;
+import com.jainbooks.fragments.AccountFragment;
+import com.jainbooks.fragments.EBookNetworkHandlerFragment;
 import com.jainbooks.fragments.EBookStoreFragment;
+import com.jainbooks.fragments.EBookMyLibraryFragment;
+import com.jainbooks.model.Store;
+import com.jainbooks.utils.TAListener;
+import com.jainbooks.utils.Utils;
+import com.jainbooks.web.TAPOSTWebServiceAsyncTask;
+import com.jainbooks.web.WebServiceConstants;
 
 public class DashboardActivity extends Activity {
 	public DrawerLayout mDrawerLayout;
@@ -55,21 +74,43 @@ public class DashboardActivity extends Activity {
 	private int currentPosition;
 	public static boolean showLoginFragment;
 	public static TASlidingMenuListAdapter drawerAdapter;
-
-	@Override
+    public static Activity activity;
+    public  App app;
+    
+    @Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 	
 		setContentView(R.layout.activity_main);
+		activity=this;
 		
+		
+		
+		 try {
+	            PackageInfo info = getPackageManager().getPackageInfo(
+	                    "org.jainbooks.ebook", 
+	                    PackageManager.GET_SIGNATURES);
+	            for (Signature signature : info.signatures) {
+	                MessageDigest md = MessageDigest.getInstance("SHA");
+	                md.update(signature.toByteArray());
+	                Log.e("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+	                }
+	        } catch (NameNotFoundException e) {
+
+	        } catch (NoSuchAlgorithmException e) {
+
+	        }
+		
+		
+	  app=(App) getApplication();
 		mTitle = mDrawerTitle = "JainApp";
 		mFragmentTitlesTitles = getResources().getStringArray(
 				R.array.drawer_items);
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
-		LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		//LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
 		//mDrawerList.addHeaderView();
 		// set a custom shadow that overlays the main content when the drawer
@@ -186,19 +227,25 @@ public class DashboardActivity extends Activity {
 		}
 	}
 
-	private void selectItem(int position) {
+	public void selectItem(int position) {
 		Fragment fragment = new EBookStoreFragment();
 
-	
-
 		if (position == 0) {
-		//	fragment = new TARecentVideosFragment();
+
+			boolean isNetworkConnection = Utils.isNetworkAvailable(activity);
+			Store store = ((App) getApplication()).getStore();
+			if (store != null || isNetworkConnection) {
+				fragment = new EBookStoreFragment();
+
+			} else {
+				fragment = new EBookNetworkHandlerFragment();
+
+			}
 		} else if (position == 1) {
-			
+			fragment = new EBookMyLibraryFragment();
 		} else if (position == 2) {
-		startActivity(new Intent(this, LoginActivity.class));
+			fragment = new AccountFragment();
 		}
-		
 
 		FragmentManager fragmentManager = getFragmentManager();
 		fragmentManager.popBackStack(null,
@@ -332,5 +379,16 @@ public class DashboardActivity extends Activity {
 	protected void onDestroy() {
 		super.onDestroy();
 		
+	}
+
+	public static void registorOrAuthenticate(Activity mActivity,
+			String argJSONString, TAListener listener,String url) {
+		new TAPOSTWebServiceAsyncTask(
+				mActivity,
+				null,
+				listener,
+				WebServiceConstants.BASE_URL + url,
+				argJSONString).executeOnExecutor(
+				AsyncTask.THREAD_POOL_EXECUTOR, (Void[]) null);
 	}
 }
