@@ -1,0 +1,92 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LinearLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/new_bg"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/loginContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#CBD3D8"
+        android:orientation="vertical"
+        android:padding="5dp" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/order_details_padding_small"
+            android:text="Login to access your books"
+            android:textColor="@color/text_blue"
+            android:textSize="@dimen/normal_text_font_size" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/order_details_padding_small"
+            android:text="Sync books across device and enjoy reading"
+            android:textColor="@color/text_normal"
+            android:textSize="@dimen/small_text_font_size" />
+
+        <Button
+            android:id="@+id/btnLibraryLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/order_details_padding_small"
+            android:background="@drawable/more_item_button_selector"
+            android:text="Login"
+            android:textSize="@dimen/normal_text_font_size" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/syncContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center" >
+
+        <TextView
+            android:id="@+id/TextView1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="@dimen/margin_small"
+            android:text="Books on device"
+            android:textColor="@color/black"
+            android:textSize="@dimen/normal_text_font_size" />
+
+        <Button
+            android:id="@+id/btnSync"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_gravity="right|center_vertical"
+            android:layout_margin="@dimen/margin_small"
+            android:background="@drawable/more_item_button_selector"
+            android:text="Sync"
+            android:textSize="@dimen/normal_text_font_size" />
+    </LinearLayout>
+
+    <GridView
+        android:id="@+id/listBooks"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="5dp"
+        android:numColumns="3"
+        android:layout_weight="1" >
+    </GridView>
+
+    <TextView
+        android:id="@+id/error_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Error"
+        android:textColor="@color/text_gray"
+        android:textSize="@dimen/header_text_font_size"
+        android:visibility="gone" />
+
+</LinearLayout>
