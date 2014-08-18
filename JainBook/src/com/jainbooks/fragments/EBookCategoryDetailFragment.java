@@ -51,8 +51,6 @@ public class EBookCategoryDetailFragment extends BaseFragment {
 		dashboardActivity.getActionBar().setIcon(R.drawable.icon);
 		dashboardActivity.getActionBar().setDisplayHomeAsUpEnabled(true);
 		dashboardActivity.getActionBar().setHomeButtonEnabled(true);
-		dashboardActivity.getActionBar().setBackgroundDrawable(
-				getResources().getDrawable(R.color.black));
 		dashboardActivity.getActionBar().setTitle(getArguments().getString(JainBooksConstants.CATEGORY_NAME));
 		dashboardActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		
@@ -118,7 +116,7 @@ public class EBookCategoryDetailFragment extends BaseFragment {
 									Store.class);
 							 if (store!=null) {
 								
-					        		
+					        	refreshViews();	
 								} else {
                                 NotificationUtils.showNotificationToast(dashboardActivity, "Server Not Responds");
 							}

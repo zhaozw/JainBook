@@ -80,16 +80,16 @@ public class EBookCategoryDetailAdapter extends ArrayAdapter<EBook> {
 	   holder.textAuthor.setText(eBook.getAuthor());
 	   holder.textSummery.setText(eBook.getSummary());
 	   holder.ratingBar.setRating(eBook.getRating());
-/*	   holder.relativeLayoutListItemDetails.setDrawingCacheEnabled(true);
-	   holder.relativeLayoutListItemDetails.measure(
+      /* holder.layoutListItemDetails.setDrawingCacheEnabled(true);
+	   holder.layoutListItemDetails.measure(
 				MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED),
 				MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED));
 
-		convertView.setMinimumHeight(holder.relativeLayoutListItemDetails.getMeasuredHeight() + 15);
+		convertView.setMinimumHeight(holder.layoutListItemDetails.getMeasuredHeight() + 15);
 
 		RelativeLayout.LayoutParams paramsImage = (android.widget.RelativeLayout.LayoutParams) holder.imageViewbook
 				.getLayoutParams();
-		paramsImage.height = holder.relativeLayoutListItemDetails.getMeasuredHeight();
+		paramsImage.height = holder.layoutListItemDetails.getMeasuredHeight();
 		holder.imageViewbook.setLayoutParams(paramsImage);
 		holder.imageViewbook
 				.setScaleType(ImageView.ScaleType.FIT_CENTER);*/

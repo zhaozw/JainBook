@@ -16,8 +16,11 @@
 
 package com.jainbooks.activitys;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 import org.jainbooks.ebook.R;
 
@@ -28,18 +31,13 @@ import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.Signature;
-import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.res.AssetManager;
 import android.content.res.Configuration;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -50,14 +48,12 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 
-import com.google.gson.JsonObject;
 import com.jainbooks.adapter.TASlidingMenuListAdapter;
 import com.jainbooks.fragments.AccountFragment;
+import com.jainbooks.fragments.EBookMyLibraryFragment;
 import com.jainbooks.fragments.EBookNetworkHandlerFragment;
 import com.jainbooks.fragments.EBookStoreFragment;
-import com.jainbooks.fragments.EBookMyLibraryFragment;
 import com.jainbooks.model.Store;
-import com.jainbooks.mupdf.MuPDFActivity;
 import com.jainbooks.utils.TAListener;
 import com.jainbooks.utils.Utils;
 import com.jainbooks.web.TAPOSTWebServiceAsyncTask;
@@ -87,7 +83,7 @@ public class DashboardActivity extends Activity {
 		setContentView(R.layout.activity_main);
 		activity=this;
 		
-		
+		/*
 		
 		 try {
 	            PackageInfo info = getPackageManager().getPackageInfo(
@@ -102,11 +98,11 @@ public class DashboardActivity extends Activity {
 
 	        } catch (NoSuchAlgorithmException e) {
 
-	        }
+	        }*/
 		
 		
 	  app=(App) getApplication();
-		mTitle = mDrawerTitle = "JainApp";
+		mTitle = mDrawerTitle = "JainBook";
 		mFragmentTitlesTitles = getResources().getStringArray(
 				R.array.drawer_items);
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -131,7 +127,7 @@ public class DashboardActivity extends Activity {
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		getActionBar().setHomeButtonEnabled(true);
 		getActionBar().setBackgroundDrawable(
-				getResources().getDrawable(R.color.black));
+				getResources().getDrawable(R.drawable.top_background_gradient));
 		
 
 		// ActionBarDrawerToggle ties together the the proper interactions
@@ -215,7 +211,7 @@ public class DashboardActivity extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		
+		copyAssets();
 	}
 
 	/* The click listner for ListView in the navigation drawer */
@@ -399,5 +395,33 @@ public class DashboardActivity extends Activity {
 				WebServiceConstants.BASE_URL + url,
 				argJSONString).executeOnExecutor(
 				AsyncTask.THREAD_POOL_EXECUTOR, (Void[]) null);
+	}
+	private void copyAssets() {
+	    AssetManager assetManager = getAssets();
+	           InputStream in = null;
+	        OutputStream out = null;
+	        try {
+	          in = assetManager.open("book.pdf");
+	          File outFile = getExternalCacheDir();
+	          File file = new File(outFile, "book.pdf");
+	          out = new FileOutputStream(file);
+	          copyFile(in, out);
+	          in.close();
+	          in = null;
+	          out.flush();
+	          out.close();
+	          out = null;
+	          Log.e("tag", "copyed");
+	        } catch(IOException e) {
+	            Log.e("tag", "Failed to copy asset file: book.pdf "  , e);
+	        }       
+	    
+	}
+	private void copyFile(InputStream in, OutputStream out) throws IOException {
+	    byte[] buffer = new byte[1024];
+	    int read;
+	    while((read = in.read(buffer)) != -1){
+	      out.write(buffer, 0, read);
+	    }
 	}
 }

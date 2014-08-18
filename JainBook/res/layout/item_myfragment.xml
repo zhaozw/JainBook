@@ -38,7 +38,8 @@
             android:id="@+id/layoutListItemDetails"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_gravity="top"
+          
             android:layout_marginLeft="@dimen/layout_padding_medium"
             android:orientation="vertical" >
 
@@ -47,8 +48,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
-                android:lines="2"
-                android:minLines="2"
+                android:lines="1"
+                android:minLines="1"
                 android:text="Video Title"
                 android:textColor="@color/text_blue"
                 android:textSize="@dimen/normal_text_font_size" />
@@ -59,7 +60,7 @@
                 android:layout_height="wrap_content"
                 android:text="SpeakerName"
                 android:textColor="@color/text_normal"
-                android:textSize="@dimen/normal_text_font_size" />
+                android:textSize="@dimen/small_text_font_size" />
 
             <TextView
                 android:id="@+id/textBookCategory"
@@ -69,14 +70,14 @@
                 android:maxLines="1"
                 android:text="Category:"
                 android:textColor="@color/text_normal"
-                android:textSize="@dimen/normal_text_font_size" />
+                android:textSize="@dimen/small_text_font_size" />
 
             <RatingBar
                 android:id="@+id/ratingBar"
                 style="@style/foodRatingBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:isIndicator="false"
+                android:isIndicator="true"
                 android:numStars="5"
                 android:rating="4" />
 
@@ -90,35 +91,7 @@
                 android:text="Summary"
                 android:textColor="@color/text_normal"
                 android:textSize="@dimen/small_text_font_size" />
-            <!--
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_below="@+id/textViewRecentVideosListCategory" >
-
-                <TextView
-                    android:id="@+id/textViewRecentVideosListLanguage"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:text="Language:"
-                    android:textColor="@color/text_normal"
-                    android:textSize="@dimen/small_text_font_size" />
-
-                
-                     <TextView
-                    android:id="@+id/textViewRecentVideosListDate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:text="Date"
-                    android:textColor="@color/text_normal"
-                    android:textSize="@dimen/small_text_font_size" />
-               
-
-            </RelativeLayout>
-            -->
+         
         </LinearLayout>
     </LinearLayout>
 

@@ -30,6 +30,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
 
+import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
 import com.google.gson.Gson;
 import com.jainbooks.model.Login;
@@ -40,7 +41,8 @@ import com.jainbooks.utils.TAListener;
 import com.jainbooks.web.WebServiceConstants;
 
 
-public class LoginActivity extends Activity{
+public class LoginActivity extends Activity implements OnClickListener,
+ConnectionCallbacks, OnConnectionFailedListener{
   
 	private EditText editTextLoginUsername;
 	private EditText editTextLoginPassword;
@@ -54,11 +56,11 @@ public class LoginActivity extends Activity{
 	// google+
 	
 	private SignInButton btnSignIn;
-	/*private GoogleApiClient mGoogleApiClient;
+	private GoogleApiClient mGoogleApiClient;
 	private ConnectionResult mConnectionResult;
 	 private static final int RC_SIGN_IN = 0;
 	 private boolean mIntentInProgress;
-	  private boolean mSignInClicked;*/
+	  private boolean mSignInClicked;
 	 
 	
 	
@@ -98,42 +100,46 @@ public class LoginActivity extends Activity{
             }
         });
            btnSignIn = (SignInButton) findViewById(R.id.btn_sign_in);
+           btnSignIn.setOnClickListener(this);
            for (int i = 0; i < btnSignIn.getChildCount(); i++) {
                View v = btnSignIn.getChildAt(i);
 
                if (v instanceof TextView) {
                    TextView tv = (TextView) v;
                    tv.setText("Log in with Google");
-                   return;
+                  break;
                }
            }
-    /*    btnSignIn.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View arg0) {
-				if (!mGoogleApiClient.isConnecting()) {
-			        mSignInClicked = true;
-			        resolveSignInError();
-			    }
-			}
-		});*/
+        
+       
          
-      /*   mGoogleApiClient = new GoogleApiClient.Builder(this)
-        .addConnectionCallbacks(this)
-        .addOnConnectionFailedListener(this).addApi(Plus.API, null)
-        .addScope(Plus.SCOPE_PLUS_LOGIN).build();*/
+         try {
+			mGoogleApiClient = new GoogleApiClient.Builder(this)
+			.addConnectionCallbacks(this)
+			.addOnConnectionFailedListener(this).addApi(Plus.API)
+			.addScope(Plus.SCOPE_PLUS_LOGIN).build();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
-	/*private void resolveSignInError() {
-	    if (mConnectionResult.hasResolution()) {
-	        try {
-	            mIntentInProgress = true;
-	            mConnectionResult.startResolutionForResult(this, RC_SIGN_IN);
-	        } catch (SendIntentException e) {
-	            mIntentInProgress = false;
-	            mGoogleApiClient.connect();
+	
+	   @Override
+	    public void onClick(View v) {
+	        switch (v.getId()) {
+	        case R.id.btn_sign_in:
+	        	if (null != mGoogleApiClient) {
+
+					if (!mGoogleApiClient.isConnecting()) {
+						mSignInClicked = true;
+						resolveSignInError();
+					}
+				}
+	            break;
+	      
 	        }
 	    }
-	}*/
+	 
 	 private void updateUI() {
 	        Session session = Session.getActiveSession();
 	        boolean enableButtons = (session != null && session.isOpened());
@@ -177,8 +183,11 @@ public class LoginActivity extends Activity{
 									Login.class);
 
 				if (null != login) {
-					if (login.getStatusCode().equalsIgnoreCase(
-							"SUCCESS_003")) {
+					String statusCode=login.getStatusCode();
+					if (statusCode.equalsIgnoreCase(
+							"SUCCESS_003")||statusCode.equalsIgnoreCase(
+							"SUCCESS_002")) {
+						
 						User mUser=new User();
 				       	mUser.setName(user.getFirstName());
 				       	mUser.setLoginFrom("Facebook");
@@ -188,10 +197,11 @@ public class LoginActivity extends Activity{
 					
 						
 					}
-					NotificationUtils
+					
+				/*	NotificationUtils
 					.showNotificationToast(
 							context,
-							login.getMessage());
+							login.getMessage());*/
 					finish();
 
 				} else {
@@ -205,7 +215,7 @@ public class LoginActivity extends Activity{
 			}
 			}; 
 			
-			DashboardActivity.registorOrAuthenticate(context, jsonObject.toString(), taListener,WebServiceConstants.AUTHENTICATE);
+			DashboardActivity.registorOrAuthenticate(context, jsonObject.toString(), taListener,WebServiceConstants.REGISTRATION);
 		
 
 	        }
@@ -220,8 +230,13 @@ public void onResume() {
 @Override
 public void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
-    Session.getActiveSession().onActivityResult(this, requestCode, resultCode, data);
-   /* if (requestCode == RC_SIGN_IN) {
+    Session session=Session.getActiveSession();
+    if (null!=session) {
+    	 Session.getActiveSession().onActivityResult(this, requestCode, resultCode, data);
+	}
+   
+    
+    if (requestCode == RC_SIGN_IN) {
         if (resultCode != RESULT_OK) {
             mSignInClicked = false;
         }
@@ -231,19 +246,24 @@ public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (!mGoogleApiClient.isConnecting()) {
             mGoogleApiClient.connect();
         }
-    }*/
+    }
 }
 
 protected void onStart() {
     super.onStart();
-   // mGoogleApiClient.connect();
+    if (mGoogleApiClient!=null) {
+    	 mGoogleApiClient.connect();
+	}
+   
 }
 
 protected void onStop() {
     super.onStop();
-   /* if (mGoogleApiClient.isConnected()) {
+    if (mGoogleApiClient!=null) {
+    if (mGoogleApiClient.isConnected()) {
         mGoogleApiClient.disconnect();
-    }*/
+    }
+    }
 }
 
 @Override
@@ -405,32 +425,23 @@ public void onSaveInstanceState(Bundle outState) {
 			}
 		});
 	}
-	/*private void onSessionStateChange(Session session, SessionState state, Exception exception) {
-	    if (state.isOpened()) {
-	        Log.i(TAG, "Logged in...");
-	        
-	        
-	    } else if (state.isClosed()) {
-	        Log.i(TAG, "Logged out...");
-	    }
-	}*/
 
-	/*@Override
+
+@Override
 	public void onConnected(Bundle arg0) {
 		mSignInClicked = false;
 	    Toast.makeText(this, "User is connected!", Toast.LENGTH_LONG).show();
 	 
-	   // getProfileInformation();
+	    getProfileInformation();
 	    updateUI(true);
 	}
 
-	 
-	@Override
-	public void onDisconnected() {
-		mGoogleApiClient.connect();
-	    updateUI(false);
-		
-	}
+@Override
+public void onConnectionSuspended(int arg0) {
+	 mGoogleApiClient.connect();
+     updateUI(false);
+}
+	
 
 	private void updateUI(boolean isSignedIn) {
 		if (isSignedIn) {
@@ -450,12 +461,104 @@ public void onSaveInstanceState(Bundle outState) {
 		        mConnectionResult = result;
 		 
 		        if (mSignInClicked) {
-		            // The user has already clicked 'sign-in' so we attempt to
-		            // resolve all
-		            // errors until the user is signed in, or they cancel.
+		           
 		            resolveSignInError();
 		        }
 		    }
 	}
-	*/
+	
+	private void resolveSignInError() {
+	    if (mConnectionResult.hasResolution()) {
+	        try {
+	            mIntentInProgress = true;
+	            mConnectionResult.startResolutionForResult(this, RC_SIGN_IN);
+	        } catch (SendIntentException e) {
+	            mIntentInProgress = false;
+	            mGoogleApiClient.connect();
+	        }
+	    }
+	}
+	private void getProfileInformation() {
+	    try {
+	        if (Plus.PeopleApi.getCurrentPerson(mGoogleApiClient) != null) {
+	            Person currentPerson = Plus.PeopleApi
+	                    .getCurrentPerson(mGoogleApiClient);
+	            final String personName = currentPerson.getDisplayName();
+	           String personGooglePlusProfile = currentPerson.getUrl();
+	            final String email = Plus.AccountApi.getAccountName(mGoogleApiClient);
+	 
+	            JSONObject jsonObject = new JSONObject();
+				try {
+					jsonObject.put("email", email);
+					jsonObject.put("loginSource", "gplus");
+				} catch (JSONException e) {
+					e.printStackTrace();
+					NotificationUtils.showNotificationToast(context,
+							"Please re-enter Username and Password");
+				} catch (NullPointerException e) {
+					e.printStackTrace();
+					NotificationUtils.showNotificationToast(context,
+							"Please re-enter Username and Password");
+				}
+				
+	            TAListener taListener=new TAListener() {
+					
+					@Override
+					public void onTaskFailed(Bundle argBundle) {
+						
+					}
+					
+					@Override
+					public void onTaskCompleted(Bundle argBundle) {
+					
+						Gson gson=new Gson();
+						String responseJSON = argBundle
+								.getString(TAListener.LISTENER_BUNDLE_STRING);
+						
+						Login login =gson
+								.fromJson(responseJSON,
+										Login.class);
+
+					if (null != login) {
+						String statusCode=login.getStatusCode();
+						if (statusCode.equalsIgnoreCase(
+								"SUCCESS_003")||statusCode.equalsIgnoreCase(
+								"SUCCESS_002")) {
+							
+							User mUser=new User();
+					       	mUser.setName(personName);
+					       	mUser.setLoginFrom("Gmail");
+					       	mUser.setEmail(email);
+							String userString=new Gson().toJson(mUser);
+							SharedPreferencesUtil.savePreferences(context, SharedPreferencesUtil.USER, userString);
+						
+						}
+						
+					/*	NotificationUtils
+						.showNotificationToast(
+								context,
+								login.getMessage());*/
+						finish();
+
+					} else {
+							NotificationUtils
+									.showNotificationToast(
+											context,
+											"Server not responds");
+						}
+
+					
+				}
+				}; 
+				
+				DashboardActivity.registorOrAuthenticate(context, jsonObject.toString(), taListener,WebServiceConstants.REGISTRATION);
+			
+	        } else {
+	            Toast.makeText(getApplicationContext(),
+	                    "Person information is null", Toast.LENGTH_LONG).show();
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	}
 }

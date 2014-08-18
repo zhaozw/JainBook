@@ -30,7 +30,7 @@ import com.jainbooks.adapter.EBookStoreFragmentAdapter;
 /**
  * Temporary placeholder/reference
  * 
- * @author Atul Mittal
+ * @author Tn Yadav
  * 
  */
 public class EBookStoreFragment extends BaseFragment {
@@ -52,28 +52,22 @@ public class EBookStoreFragment extends BaseFragment {
 		store=dashboardActivity.app.getStore();
            	view = inflater.inflate(R.layout.activity_video_player, container,
     				false);
-        	setupUiComponent();
-        	if (store!=null) {
-        		pager.setAdapter(new EBookStoreFragmentAdapter(getFragmentManager()));
-        		indicator.setHorizontalScrollBarEnabled(true);
-        		indicator.setTabIndicatorColor(getResources().getColor(
-        				R.color.alpha_blue));
-        		indicator.setSelected(true);
-        		indicator.setDrawFullUnderline(false);
-        		indicator.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
-			}else {
-				getStore();
-			}
         	
-        	
-		
-		
-		
+      	
 		return view;
 
 	}
 
-
+@Override
+public void onResume() {
+	super.onResume();
+	
+	if (store!=null) {
+		setupUiComponent();
+	}else {
+		getStore();
+	}
+}
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -112,6 +106,14 @@ public class EBookStoreFragment extends BaseFragment {
 				.findViewById(R.id.pager);
 		indicator = PagerTabStrip.class.cast(view
 				.findViewById(R.id.pager_title_strip));
+		pager.setAdapter(new EBookStoreFragmentAdapter(getFragmentManager()));
+		//indicator.setHorizontalScrollBarEnabled(true);
+		indicator.setTabIndicatorColor(getResources().getColor(
+				R.color.alpha_blue));
+		indicator.setSelected(true);
+		indicator.setDrawFullUnderline(false);
+		pager.setCurrentItem(1);
+		//indicator.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
 		
 
 	}
@@ -144,14 +146,7 @@ public class EBookStoreFragment extends BaseFragment {
 									Store.class);
 							 if (store!=null) {
 								 dashboardActivity.app.setStore(store);
-					        		pager.setAdapter(new EBookStoreFragmentAdapter(getFragmentManager()));
-					        		indicator.setHorizontalScrollBarEnabled(true);
-					        		indicator.setTabIndicatorColor(getResources().getColor(
-					        				R.color.alpha_blue));
-					        		indicator.setSelected(true);
-					        		indicator.setDrawFullUnderline(false);
-					        		indicator.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
-					        		
+								 setupUiComponent();
 								} else {
                                 NotificationUtils.showNotificationToast(dashboardActivity, "Server Not Responds");
 							}
